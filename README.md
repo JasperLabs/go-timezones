@@ -2,12 +2,14 @@
 
 `go get github.com/JasperLabs/go-timezones`
 
+Available on GoDoc at [godoc.org/github.com/JasperLabs/go-timezones](https://godoc.org/github.com/JasperLabs/go-timezones).
+
 Provides a Go application with an [array of timezones](https://github.com/dmfilipenko/timezones.json/blob/master/timezones.json) as package `timezones`.
 
 ## Usage
 
 Access TimeZone struct via `timezones.TimeZone`
-```
+```go
 type TimeZone struct {
 	Value  string   `json:"value"`  // Dateline Standard Time
 	Abbr   string   `json:"abbr"`   // DST
@@ -19,7 +21,7 @@ type TimeZone struct {
 ```
 
 Get an array of TimeZones.
-```
+```go
 timezones := GetTimeZones()
 	
 for _, tz := range timezones {
@@ -28,7 +30,7 @@ for _, tz := range timezones {
 ```
 
 Get a specific TimeZone by `Value`.
-```
+```go
 var offset string
 tz, err := timezones.GetTimeZoneByValue(req.TimeZone)
 if err == timezones.TimeZoneNotFound {
