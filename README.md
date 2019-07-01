@@ -4,7 +4,7 @@
 
 Available on GoDoc at [godoc.org/github.com/JasperLabs/go-timezones](https://godoc.org/github.com/JasperLabs/go-timezones).
 
-Provides a Go application with an [array of timezones](https://github.com/dmfilipenko/timezones.json/blob/master/timezones.json) as package `timezones`.
+Provides a Go application with an array of timezones (sourced from [dmfilipenko/timezones.json](https://github.com/dmfilipenko/timezones.json/blob/master/timezones.json)) as package `timezones`.
 
 ## Usage
 
