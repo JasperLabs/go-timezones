@@ -4,7 +4,7 @@
 
 Available on GoDoc at [godoc.org/github.com/JasperLabs/go-timezones](https://godoc.org/github.com/JasperLabs/go-timezones).
 
-Provides a Go application with an array of timezones (sourced from [dmfilipenko/timezones.json](https://github.com/dmfilipenko/timezones.json/blob/master/timezones.json)) as package `timezones`.
+Provides a Go application with a slice of timezones (sourced from [dmfilipenko/timezones.json](https://github.com/dmfilipenko/timezones.json/blob/master/timezones.json)) as package `timezones`.
 
 ## Usage
 
@@ -20,23 +20,35 @@ type TimeZone struct {
 }
 ```
 
-Get an array of TimeZones.
+Get a slice of TimeZones.
 ```go
 timezones := GetTimeZones()
 	
 for _, tz := range timezones {
-	log.Printf("%v (%v)", tz.Text, tz.Offset)
+	log.Printf("%v", tz.Text)
 }
 ```
 
 Get a specific TimeZone by `Value`.
 ```go
 var offset string
-tz, err := timezones.GetTimeZoneByValue(req.TimeZone)
+tz, err := timezones.GetTimeZoneByValue("New Zealand Standard Time")
 if err == timezones.TimeZoneNotFound {
 	return nil, err
 }
 offset = tz.Offset
+```
+
+Get a slice of TimeZones by `Offset`.
+```go
+tzs, err := timezones.GetTimeZoneByOffset(12)
+if err == timezones.NoTimeZonesFound {
+	return nil, err
+}
+
+for _, tz := range tzs {
+	log.Printf("%v", tz.Text)
+}
 ```
 
 ## Contributing
@@ -46,7 +58,7 @@ Pull requests with tests are welcome and will be reviewed in a timely manner (24
 
 The MIT License (MIT)
 
-Copyright (c) 2019 Jasper Property Limited
+Copyright (c) 2019 [Jasper Property Limited](https://www.jasper.io).
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
