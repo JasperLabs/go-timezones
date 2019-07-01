@@ -1,5 +1,5 @@
-// Package timezones provides an array of timezones as well as a simple API for accessing
-// and searching timezones.
+// Package timezones provides an slice of timezones as well as a simple
+// API for accessing and searching timezones.
 package timezones
 
 import (
@@ -11,36 +11,56 @@ import (
 type TimeZone struct {
 	Value  string   `json:"value"`
 	Abbr   string   `json:"abbr"`
-	Offset int      `json:"offset"`
+	Offset float32  `json:"offset"`
 	Isdst  bool     `json:"isdst"`
 	Text   string   `json:"text"`
 	Utc    []string `json:"utc"`
 }
 
-var TimeZoneNotFound = errors.New("timezone not found")
+var TimeZoneNotFound = errors.New("time zone not found")
+var NoTimeZonesFound = errors.New("no time zones were found")
 
-// GetTimeZones returns an array of TimeZone.
+// GetTimeZones returns a slice of TimeZone.
 func GetTimeZones() []TimeZone {
-	var timezones []TimeZone
-	json.Unmarshal([]byte(data), &timezones)
-	return timezones
+	var timeZones []TimeZone
+	json.Unmarshal([]byte(data), &timeZones)
+	return timeZones
 }
 
 // GetTimeZoneByValue returns a TimeZone by the Value field.
 func GetTimeZoneByValue(value string) (*TimeZone, error) {
-	var timezone TimeZone
-	timezones := GetTimeZones()
+	var timeZone *TimeZone
+	timeZones := GetTimeZones()
 
-	for i := range timezones {
-		if timezones[i].Value == value {
-			timezone = timezones[i]
+	for i := range timeZones {
+		if timeZones[i].Value == value {
+			timeZone = &timeZones[i]
 			break
 		}
 	}
 
-	if len(timezone.Value) == 0 {
+	if timeZone == nil {
 		return nil, TimeZoneNotFound
 	}
 
-	return &timezone, nil
+	return timeZone, nil
+}
+
+// GetTimeZoneByOffset returns all TimeZones where the Offset field equals
+// the offset argument.
+func GetTimeZoneByOffset(offset float32) ([]*TimeZone, error) {
+	var matchingTimeZones []*TimeZone
+	timeZones := GetTimeZones()
+
+	for i := range timeZones {
+		if timeZones[i].Offset == offset {
+			matchingTimeZones = append(matchingTimeZones, &timeZones[i])
+		}
+	}
+
+	if len(timeZones) == 0 {
+		return nil, TimeZoneNotFound
+	}
+
+	return matchingTimeZones, nil
 }

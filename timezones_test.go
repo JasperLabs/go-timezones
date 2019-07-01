@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-// TestGetTimeZones ensures that an array of TimeZone is returned by GetTimeZones
+// TestGetTimeZones ensures that a slice of TimeZone is returned by GetTimeZones
 func TestGetTimeZones(t *testing.T) {
 	timezones := GetTimeZones()
 
@@ -13,7 +13,8 @@ func TestGetTimeZones(t *testing.T) {
 	}
 }
 
-// TestGetTimeZoneByValue ensures that GetTimeZoneByValue finds a correct TimeZone by its field Value.
+// TestGetTimeZoneByValue ensures that GetTimeZoneByValue finds a correct
+// TimeZone by its field Value.
 func TestGetTimeZoneByValue(t *testing.T) {
 	testCases := map[string]string{
 		"SA Pacific Standard Time":  "(UTC-05:00) Bogota, Lima, Quito",
@@ -30,6 +31,31 @@ func TestGetTimeZoneByValue(t *testing.T) {
 
 		if tz.Text != testCase {
 			t.Errorf("timezone text unexpected, expected \"%v\" but got \"%v\"", testCase, tz.Text)
+		}
+	}
+}
+
+// TestGetTimeZoneByOffset ensures that TestGetTimeZoneByOffset finds
+// all timezones with the same offset as a sample.
+func TestGetTimeZoneByOffset(t *testing.T) {
+	testCases := map[float32]int{
+		// offset: expected count
+		-5: 3,
+		-1: 2,
+		0: 4,
+		1: 5,
+		5: 4,
+	}
+
+	for offset, expectedCount := range testCases {
+		timeZones, err := GetTimeZoneByOffset(offset)
+
+		if err != nil {
+			t.Error(err)
+		}
+
+		if len(timeZones) != expectedCount {
+			t.Errorf("invalid number of TimeZones returned for offset %v, expected %v but got %v", offset, expectedCount, len(timeZones))
 		}
 	}
 }
