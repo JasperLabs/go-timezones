@@ -13,7 +13,7 @@ Access TimeZone struct via `timezones.TimeZone`
 type TimeZone struct {
 	Value  string   `json:"value"`  // Dateline Standard Time
 	Abbr   string   `json:"abbr"`   // DST
-	Offset int      `json:"offset"` // -12
+	Offset float    `json:"offset"` // -12
 	Isdst  bool     `json:"isdst"`  // false
 	Text   string   `json:"text"`   // (UTC-12:00) International Date Line West
 	Utc    []string `json:"utc"`    // ["Etc/GMT+12"]
