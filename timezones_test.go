@@ -24,7 +24,6 @@ func TestGetTimeZoneByValue(t *testing.T) {
 
 	for key, testCase := range testCases {
 		tz, err := GetTimeZoneByValue(key)
-
 		if err != nil {
 			t.Error(err)
 		}
@@ -42,20 +41,24 @@ func TestGetTimeZoneByOffset(t *testing.T) {
 		// offset: expected count
 		-5: 3,
 		-1: 2,
-		0: 4,
-		1: 5,
-		5: 4,
+		0:  4,
+		1:  5,
+		5:  4,
 	}
 
 	for offset, expectedCount := range testCases {
 		timeZones, err := GetTimeZoneByOffset(offset)
-
 		if err != nil {
 			t.Error(err)
 		}
 
 		if len(timeZones) != expectedCount {
-			t.Errorf("invalid number of TimeZones returned for offset %v, expected %v but got %v", offset, expectedCount, len(timeZones))
+			t.Errorf(
+				"invalid number of TimeZones returned for offset %v, expected %v but got %v",
+				offset,
+				expectedCount,
+				len(timeZones),
+			)
 		}
 	}
 }

@@ -3,7 +3,6 @@
 package timezones
 
 import (
-	"encoding/json"
 	"errors"
 )
 
@@ -17,14 +16,14 @@ type TimeZone struct {
 	Utc    []string `json:"utc"`
 }
 
-var TimeZoneNotFound = errors.New("time zone not found")
-var NoTimeZonesFound = errors.New("no time zones were found")
+var (
+	TimeZoneNotFound = errors.New("time zone not found")
+	NoTimeZonesFound = errors.New("no time zones were found")
+)
 
 // GetTimeZones returns a slice of TimeZone.
 func GetTimeZones() []TimeZone {
-	var timeZones []TimeZone
-	json.Unmarshal([]byte(data), &timeZones)
-	return timeZones
+	return goData
 }
 
 // GetTimeZoneByValue returns a TimeZone by the Value field.
